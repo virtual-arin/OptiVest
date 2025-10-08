@@ -13,10 +13,10 @@ const Education = () => {
           />
         </div>
         <div className="md:text-left">
-          <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-2 text-left">
+          <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mt-2 text-left">
             Free and open market education
           </h2>
-          <div className="mt-8 space-y-8">
+          <div className="mt-4 space-y-8">
             <div>
               <p className="text-lg text-gray-600">
                 Varsity, the largest online stock market education book in the

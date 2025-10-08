@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,9 +8,9 @@ const Navbar = () => {
   return (
     <nav className="bg-gray-100 flex items-center justify-between flex-wrap p-4 sticky top-0 z-50">
       <div className="flex items-center flex-shrink-0 text-gray-800 ml-5">
-        <a href="#">
+        <Link to="/">
           <img src="media/logo.png" alt="OptiVest logo" className="h-15" />
-        </a>
+        </Link>
       </div>
       <div className="block lg:hidden">
         <button
@@ -31,44 +32,44 @@ const Navbar = () => {
       >
         <ul className="text-lg lg:flex-grow lg:flex lg:justify-end ml-4">
           <li>
-            <a
-              href="#"
+            <Link
+              to="/signup"
               className="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-blue-600 mr-10"
             >
               Signup
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href="#"
+            <Link
+              to="/about"
               className="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-blue-600 mr-10"
             >
               About
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href="#"
+            <Link
+              to="/product"
               className="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-blue-600 mr-10"
             >
               Product
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href="#"
+            <Link
+              to="/pricing"
               className="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-blue-600 mr-10"
             >
               Pricing
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href="#"
+            <Link
+              to="/support"
               className="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-blue-600 mr-10"
             >
               Support
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
