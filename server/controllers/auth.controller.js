@@ -1,4 +1,5 @@
 const { otp, sendWelcomeEmail } = require("../config/otp.js");
+const { generateToken } = require("../config/token.js");
 const User = require("../models/user.model.js");
 const bcrypt = require("bcryptjs");
 
@@ -51,7 +52,7 @@ module.exports.signup = async (req, res) => {
     });
 
     otp(user.email, verificationCode, registrationDate, registrationTime);
-    return res.status(201).json(user);
+    return res.status(201).json({ message: "Verify your email!" });
   } catch (error) {
     console.log("An error occured while signing up: ", error);
   }
@@ -82,6 +83,16 @@ module.exports.verify = async (req, res) => {
     user.isVerified = true;
     user.verificationCode = undefined;
     user.verificationCodeExpires = undefined;
+
+    const token = await generateToken(user._id);
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      sameSite: "None",
+      secure: true,
+    });
+
     await user.save();
 
     // Format registration date and time for the welcome email
@@ -96,26 +107,56 @@ module.exports.verify = async (req, res) => {
       timeZoneName: "short",
     });
 
-    // Send welcome email asynchronously (don't make the user wait)
     sendWelcomeEmail(user.email, user.name, registrationDate, registrationTime);
 
-    return res.status(200).json({ message: "Email verified successfully." });
+    return res
+      .status(200)
+      .json({ message: "Email verified successfully. ", user });
   } catch (error) {
     console.log("An error occured while verifying user: ", error);
-    return res
-      .status(500)
-      .json({ message: "An internal server error occurred." });
   }
 };
 
 //Login
 module.exports.login = async (req, res) => {
   try {
-  } catch (error) {}
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({ message: "User not found!" });
+    }
+
+    const validPassword = await bcrypt.compare(password, user.password);
+
+    if (!validPassword) {
+      return res
+        .status(400)
+        .json({ message: "Incorrect password. Please try again later" });
+    }
+
+    const token = await generateToken(user._id);
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      sameSite: "None",
+      secure: false,
+    });
+
+    return res.status(201).json({ message: "Logged in successfully" });
+  } catch (error) {
+    console.log("An error occured while logging in user: ", error);
+  }
 };
 
 //Logout
 module.exports.logout = async (req, res) => {
   try {
-  } catch (error) {}
+    res.clearCookie("token");
+    return res.status(201).json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.log("An error occured while logging out user: ", error);
+  }
 };
