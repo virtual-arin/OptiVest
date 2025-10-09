@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 import NotFound from "./components/NotFound";
 import Login from "./components/signup/Login";
 import Dashboard from "./components/dashboard/Dashboard";
+import Verify from "./components/signup/Verify";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/support" element={<SupportPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/verify" element={<Verify />} />
       </Routes>
       <Footer />
     </>
