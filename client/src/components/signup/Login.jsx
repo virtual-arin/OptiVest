@@ -26,7 +26,7 @@ const Login = () => {
         },
         { withCredentials: true }
       );
-      if (result.status === 200) {
+      if (result.status === 201) {
         navigate("/dashboard");
       }
     } catch (error) {

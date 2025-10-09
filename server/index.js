@@ -12,7 +12,7 @@ const port = process.env.PORT;
 
 app.use(
   cors({
-    origin: "https://optivest.onrender.com",
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
@@ -21,10 +21,6 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api/auth", authRouter);
-
-app.get("/", (req, res) => {
-  res.send("Welcome back arin!");
-});
 
 app.listen(port, () => {
   connectDB();

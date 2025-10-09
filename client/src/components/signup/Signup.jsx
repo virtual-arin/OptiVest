@@ -29,7 +29,7 @@ const Signup = () => {
         { withCredentials: true }
       );
       if (result.status === 201) {
-        navigate("/verify");
+        navigate("/dashboard");
       }
     } catch (error) {
       setError(
